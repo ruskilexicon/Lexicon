@@ -1,0 +1,424 @@
+{
+  "sourceFile": "Rusinsko-engleski recnik.xlsx",
+  "extractionRule": "One output record for every non-header source row containing any value in either logical id/word/related group.",
+  "sourceRecordCount": 267792,
+  "outputRecordCount": 267792,
+  "rowCountPreserved": true,
+  "translatedRows": 43217,
+  "rowsWithoutRusynWord": 224573,
+  "rowsWithoutEnglishWord": 3,
+  "dataEncoding": "Packed UTF-8 columns plus typed-array offsets; one aligned element per source row.",
+  "sheets": [
+    {
+      "index": 0,
+      "name": "A",
+      "records": 935,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 1,
+      "name": "Б",
+      "records": 1384,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 2,
+      "name": "В",
+      "records": 2250,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 3,
+      "name": "Г",
+      "records": 941,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 4,
+      "name": "Ґ",
+      "records": 504,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 5,
+      "name": "Д",
+      "records": 2005,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 6,
+      "name": "Е",
+      "records": 417,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 7,
+      "name": "Є",
+      "records": 213,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 8,
+      "name": "Ж",
+      "records": 376,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 9,
+      "name": "З",
+      "records": 2251,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 10,
+      "name": "И",
+      "records": 434,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 11,
+      "name": "Ї",
+      "records": 12,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 12,
+      "name": "Й",
+      "records": 33,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 13,
+      "name": "К",
+      "records": 2456,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 14,
+      "name": "Л",
+      "records": 823,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 15,
+      "name": "М",
+      "records": 1688,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 16,
+      "name": "Н",
+      "records": 2034,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 17,
+      "name": "О",
+      "records": 2251,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 18,
+      "name": "П",
+      "records": 6941,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 19,
+      "name": "Р",
+      "records": 2251,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 20,
+      "name": "С",
+      "records": 3092,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 21,
+      "name": "Т",
+      "records": 1287,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 22,
+      "name": "У",
+      "records": 1193,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 23,
+      "name": "Ф",
+      "records": 650,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 24,
+      "name": "Х",
+      "records": 364,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 25,
+      "name": "Ц",
+      "records": 576,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 26,
+      "name": "Ч",
+      "records": 620,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 27,
+      "name": "Ш",
+      "records": 1293,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 28,
+      "name": "Щ",
+      "records": 57,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 29,
+      "name": "Ю",
+      "records": 69,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 30,
+      "name": "Я",
+      "records": 143,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 31,
+      "name": "Додатки",
+      "records": 2074,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 32,
+      "name": "Missing A",
+      "records": 10287,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 33,
+      "name": "Missing B",
+      "records": 8878,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 34,
+      "name": "Missing C",
+      "records": 15967,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 35,
+      "name": "Missing D",
+      "records": 10740,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "E"
+    },
+    {
+      "index": 36,
+      "name": "Missing E",
+      "records": 7343,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 37,
+      "name": "Missing F",
+      "records": 6373,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 38,
+      "name": "Missing G",
+      "records": 5993,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 39,
+      "name": "Missing H",
+      "records": 6521,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 40,
+      "name": "Missing I",
+      "records": 6823,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 41,
+      "name": "Missing J",
+      "records": 1630,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 42,
+      "name": "Missing K",
+      "records": 2018,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 43,
+      "name": "Missing L",
+      "records": 5219,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 44,
+      "name": "Missing M",
+      "records": 9965,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 45,
+      "name": "Missing N",
+      "records": 3574,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 46,
+      "name": "Missing O",
+      "records": 5055,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 47,
+      "name": "Missing P",
+      "records": 14353,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 48,
+      "name": "Missing Q",
+      "records": 1675,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 49,
+      "name": "Missing R",
+      "records": 15565,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 50,
+      "name": "Missing S",
+      "records": 35495,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 51,
+      "name": "Missing T",
+      "records": 16909,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 52,
+      "name": "Missing U",
+      "records": 22252,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 53,
+      "name": "Missing V",
+      "records": 4884,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 54,
+      "name": "Missing W",
+      "records": 6050,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 55,
+      "name": "Missing X",
+      "records": 428,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 56,
+      "name": "Missing Y",
+      "records": 998,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    },
+    {
+      "index": 57,
+      "name": "Missing Z",
+      "records": 1180,
+      "rusynWordColumn": "B",
+      "englishWordColumn": "F"
+    }
+  ],
+  "rusynSearchNormalization": "Common Latin look-alike characters are converted to their Cyrillic equivalents only inside mixed Cyrillic/Latin tokens.",
+  "rusynRowsWithLookalikeNormalization": 8092,
+  "rusynLookalikeCharactersNormalized": 15411,
+  "rusynSearchOrderRebuilt": true,
+  "sourceRowsModifiedOrRemoved": false
+}

@@ -1,0 +1,17 @@
+Lexicon Android Studio project verification
+
+Verified during packaging:
+- dictionary.json parses as valid JSON.
+- dictionary rowCount is 267,792.
+- app.js passes Node.js syntax checking.
+- data-worker.js passes Node.js syntax checking.
+- Android manifest and resource XML files parse successfully.
+- Gradle bootstrap JAR was tested against a local Gradle-style distribution.
+- ZIP archive integrity passed.
+- No dictionary rows were removed.
+
+Not performed in this environment:
+- Android Gradle compilation, because the Android SDK was not installed.
+- Emulator or physical-device installation testing.
+
+Open the project in Android Studio, allow Gradle Sync to install/download the required components, then run it on an emulator or device.

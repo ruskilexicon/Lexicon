@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f3ec">
+  <title>Lexicon — Two-way offline Rusyn - English dictionary</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f0e8;
+      --bg2: #fbf8f3;
+      --surface: rgba(255, 255, 255, .84);
+      --solid: #fffdf9;
+      --soft: #f1ebe2;
+      --ink: #241d17;
+      --muted: #75685b;
+      --line: #ded4c7;
+      --green: #456b44;
+      --green2: #315231;
+      --green-soft: #e8f0e5;
+      --gold: #b58e56;
+      --danger: #9c443d;
+      --shadow: 0 1rem 2.7rem rgba(73, 57, 39, .09);
+      --radius: 1.4rem;
+      font-size: 16px;
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #181510;
+      --bg2: #211c16;
+      --surface: rgba(39, 34, 28, .94);
+      --solid: #28231d;
+      --soft: #322b23;
+      --ink: #f6eee5;
+      --muted: #c0b3a4;
+      --line: #4b4136;
+      --green: #8cad82;
+      --green2: #b9d4af;
+      --green-soft: #293929;
+      --gold: #d2aa73;
+      --danger: #e69b92;
+      --shadow: 0 1rem 2.7rem rgba(0, 0, 0, .3);
+    }
+
+    * { box-sizing: border-box; }
+    html { min-width: 0; background: var(--bg); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 2%, rgba(255, 255, 255, .8), transparent 27%),
+        radial-gradient(circle at 92% 6%, rgba(69, 107, 68, .08), transparent 25%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select { font: inherit; }
+    button, select { cursor: pointer; }
+    button { touch-action: manipulation; }
+    button:disabled, input:disabled, select:disabled { cursor: wait; opacity: .58; }
+    button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+      outline: .2rem solid color-mix(in srgb, var(--green) 40%, transparent);
+      outline-offset: .15rem;
+    }
+    .hidden, [hidden] { display: none !important; }
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    .app-loading #appRoot { pointer-events: none; user-select: none; }
+
+    .shell {
+      width: min(100%, 52.5rem);
+      min-height: 100vh;
+      margin: auto;
+      padding: max(1.6rem, env(safe-area-inset-top)) 1.25rem calc(7rem + env(safe-area-inset-bottom));
+    }
+
+    .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.1rem;
+      margin-bottom: 1.7rem;
+    }
+    .brand { display: flex; align-items: center; min-width: 0; gap: .95rem; }
+    .book-logo {
+      display: grid;
+      place-items: center;
+      width: 5rem;
+      height: 3.65rem;
+      flex: 0 0 auto;
+      padding: .35rem;
+      border: 1px solid var(--line);
+      border-radius: 1.05rem;
+      background: #fbfaf7;
+      box-shadow: 0 .5rem 1.5rem rgba(73, 57, 39, .06);
+      overflow: hidden;
+    }
+    .book-logo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.5rem, 7vw, 3.5rem);
+      line-height: .94;
+      letter-spacing: -.045em;
+    }
+    .subtitle {
+      max-width: 29rem;
+      margin-top: .55rem;
+      color: var(--muted);
+      font-size: .69rem;
+      line-height: 1.45;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+    .ui-language-toggle {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      flex: 0 0 auto;
+      min-height: 4.3rem;
+      max-width: 24rem;
+      padding: .55rem .75rem .55rem .55rem;
+      border: 1px solid var(--line);
+      border-radius: 1.05rem;
+      color: var(--ink);
+      text-align: left;
+      background: var(--surface);
+      box-shadow: 0 .45rem 1.4rem rgba(73, 57, 39, .05);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .ui-language-toggle:hover { border-color: color-mix(in srgb, var(--green) 42%, var(--line)); box-shadow: 0 .65rem 1.6rem rgba(73, 57, 39, .09); }
+    .ui-language-toggle:active { transform: scale(.98); }
+    .ui-language-flag {
+      width: 3.15rem;
+      height: 3.15rem;
+      flex: 0 0 auto;
+      object-fit: cover;
+      border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+      border-radius: .82rem;
+      background: var(--solid);
+      box-shadow: 0 .25rem .7rem rgba(42, 32, 22, .12);
+    }
+    .ui-language-text {
+      min-width: 0;
+      color: var(--ink);
+      font-size: clamp(.68rem, 2.2vw, .78rem);
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1 1 auto;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(.75rem);
+    }
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .language-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 4.4rem minmax(0, 1fr);
+      gap: 1rem;
+      align-items: end;
+      padding: 1.5rem;
+      margin-bottom: 1.1rem;
+    }
+    .language-control { min-width: 0; }
+    .label {
+      display: block;
+      margin: 0 0 .55rem .12rem;
+      color: var(--muted);
+      font-size: .72rem;
+      letter-spacing: .16em;
+      text-transform: none;
+    }
+    .select-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      height: 4.25rem;
+      border: 1px solid var(--line);
+      border-radius: .9rem;
+      background: color-mix(in srgb, var(--solid) 82%, transparent);
+      overflow: hidden;
+    }
+    .lang-code {
+      flex: 0 0 auto;
+      padding-left: .9rem;
+      color: var(--green2);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      white-space: nowrap;
+    }
+    .lang-separator {
+      flex: 0 0 auto;
+      padding: 0 .5rem;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .select-box select {
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+      padding: 0 2.65rem 0 0;
+      appearance: none;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font-family: Georgia, serif;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      text-overflow: ellipsis;
+    }
+    .chev {
+      position: absolute;
+      right: 1rem;
+      width: .7rem;
+      height: .7rem;
+      border-right: .13rem solid var(--muted);
+      border-bottom: .13rem solid var(--muted);
+      transform: rotate(45deg) translateY(-.2rem);
+      pointer-events: none;
+    }
+    .swap {
+      display: grid;
+      place-items: center;
+      width: 4.25rem;
+      height: 4.25rem;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--green);
+      background: linear-gradient(180deg, var(--solid), var(--soft));
+      box-shadow: 0 .5rem 1.4rem rgba(73, 57, 39, .06);
+    }
+    .swap:active { transform: scale(.95) rotate(8deg); }
+    .swap svg { width: 1.95rem; height: 1.95rem; }
+    .direction { display: flex; justify-content: flex-end; margin: 0 .12rem .95rem; }
+    .pill {
+      padding: .55rem 1rem;
+      border: 1px solid color-mix(in srgb, var(--green) 20%, var(--line));
+      border-radius: 999px;
+      color: var(--green2);
+      background: var(--green-soft);
+      font-size: .67rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .search-wrap { position: relative; margin-bottom: 1.3rem; }
+    .search-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      min-height: 5.5rem;
+      overflow: hidden;
+    }
+    .search-box { display: flex; align-items: center; min-width: 0; padding-left: 1.4rem; }
+    .search-box > svg { width: 1.8rem; height: 1.8rem; flex: 0 0 auto; color: var(--muted); }
+    .search-box input {
+      width: 100%;
+      min-width: 0;
+      padding: 0 .8rem;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font-family: Georgia, serif;
+      font-size: clamp(1.55rem, 5vw, 2.25rem);
+      text-overflow: ellipsis;
+    }
+    .search-box input::placeholder { color: var(--muted); opacity: .7; }
+    .clear {
+      display: grid;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      flex: 0 0 auto;
+      margin-right: .45rem;
+      border: 0;
+      border-radius: 50%;
+      color: var(--muted);
+      background: transparent;
+      visibility: hidden;
+    }
+    .clear.visible { visibility: visible; }
+    .clear:hover { background: var(--soft); }
+    .clear svg { width: 1.45rem; height: 1.45rem; }
+    .lookup {
+      min-width: 10.9rem;
+      min-height: 3rem;
+      border: 0;
+      color: white;
+      background: linear-gradient(145deg, var(--green), var(--green2));
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .suggestions {
+      position: absolute;
+      z-index: 50;
+      left: 1rem;
+      right: 1rem;
+      top: calc(100% + .5rem);
+      overflow: auto;
+      overscroll-behavior: contain;
+      border: 1px solid var(--line);
+      border-radius: 1.05rem;
+      background: var(--solid);
+      box-shadow: var(--shadow);
+    }
+    .suggestions.open-up { top: auto; bottom: calc(100% + .5rem); }
+    .suggestion {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      width: 100%;
+      min-height: 3.25rem;
+      padding: .8rem 1rem;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      background: transparent;
+      text-align: left;
+    }
+    .suggestion:last-child { border-bottom: 0; }
+    .suggestion:hover, .suggestion.active { background: var(--green-soft); }
+    .suggestion strong { min-width: 0; font-family: Georgia, serif; font-size: 1.25rem; font-weight: 500; overflow-wrap: anywhere; }
+    .suggestion small { flex: 0 0 auto; color: var(--muted); font-size: .75rem; }
+
+    .content { min-height: 26rem; padding: 1.7rem; scroll-margin-top: 1rem; }
+    .empty {
+      min-height: 22.5rem;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+      border: 1px dashed color-mix(in srgb, var(--gold) 48%, var(--line));
+      border-radius: 1.1rem;
+      text-align: center;
+    }
+    .empty-inner { max-width: 33rem; }
+    .round-icon img { display: block; width: 4.9rem; height: 2.75rem; object-fit: contain; }
+    .round-icon {
+      display: grid;
+      place-items: center;
+      width: 5.75rem;
+      height: 5.75rem;
+      margin: 0 auto 1.35rem;
+      border-radius: 50%;
+      color: var(--gold);
+      background: color-mix(in srgb, var(--gold) 13%, transparent);
+    }
+    .round-icon.logo-round { background: #fbfaf7; }
+    .round-icon svg { width: 3.1rem; height: 3.1rem; }
+    .empty h2, .section-title, .query-title { margin: 0; font-family: Georgia, serif; font-weight: 600; letter-spacing: -.025em; }
+    .empty h2 { font-size: clamp(1.95rem, 6vw, 2.8rem); }
+    .empty p { margin: .8rem auto 0; color: var(--muted); line-height: 1.65; }
+    .examples { display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem; margin-top: 1.3rem; }
+    .chip, .soft {
+      min-height: 3rem;
+      padding: .6rem .9rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--green2);
+      background: var(--solid);
+    }
+    .chip:hover { border-color: var(--green); background: var(--green-soft); }
+    .data-note { margin-top: 1.3rem; color: var(--muted); font-size: .75rem; }
+    .results-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: .95rem;
+      padding-bottom: 1.1rem;
+      margin-bottom: 1.05rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .kicker { color: var(--muted); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
+    .query-title { margin-top: .3rem; font-size: clamp(1.95rem, 6vw, 2.75rem); overflow-wrap: anywhere; }
+    .result-count { color: var(--muted); font-size: .78rem; white-space: nowrap; }
+    .result-list { display: grid; gap: .7rem; }
+    .result-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: .9rem;
+      padding: 1.05rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: var(--solid);
+    }
+    .translation { font-family: Georgia, serif; font-size: clamp(1.45rem, 4vw, 1.9rem); overflow-wrap: anywhere; }
+    .source { margin-top: .35rem; color: var(--muted); font-size: .9rem; overflow-wrap: anywhere; }
+    .meta { margin-top: .55rem; color: var(--muted); font-size: .7rem; letter-spacing: .035em; }
+    .missing { color: var(--danger); font-family: inherit; font-size: .9rem; font-weight: 700; }
+    .star {
+      display: grid;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--muted);
+      background: var(--soft);
+    }
+    .star.saved { color: var(--gold); border-color: var(--gold); }
+    .star.saved svg { fill: currentColor; }
+    .star svg { width: 1.3rem; height: 1.3rem; }
+    .more {
+      display: block;
+      width: min(100%, 18.75rem);
+      min-height: 3rem;
+      margin: 1.2rem auto 0;
+      padding: .75rem 1.1rem;
+      border: 1px solid var(--green);
+      border-radius: .8rem;
+      color: var(--green2);
+      background: var(--green-soft);
+      font-weight: 750;
+    }
+    .not-found { padding: 2.1rem .9rem; text-align: center; }
+    .not-found h2 { margin: 0; font-family: Georgia, serif; font-size: 2.1rem; }
+    .not-found p { color: var(--muted); line-height: 1.6; }
+    .nearby { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-top: 1.1rem; }
+
+    .section { min-height: 31rem; padding: 1.6rem; }
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: .9rem;
+      padding-bottom: 1.1rem;
+      margin-bottom: 1.15rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-title { font-size: clamp(2rem, 6vw, 2.75rem); }
+    .section-sub { margin-top: .3rem; color: var(--muted); font-size: .8rem; }
+    .soft.danger { color: var(--danger); }
+    .soft:disabled { cursor: default; }
+    .stack { display: grid; gap: .65rem; }
+    .list-empty { padding: 4.3rem 1.25rem; color: var(--muted); text-align: center; }
+    .list-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: .9rem;
+      padding: .95rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: .95rem;
+      background: var(--solid);
+    }
+    .list-term { font-family: Georgia, serif; font-size: 1.4rem; overflow-wrap: anywhere; }
+    .list-meta { margin-top: .25rem; color: var(--muted); font-size: .75rem; overflow-wrap: anywhere; }
+    .actions { display: flex; gap: .45rem; }
+    .icon-btn {
+      display: grid;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid var(--line);
+      border-radius: .75rem;
+      color: var(--muted);
+      background: var(--soft);
+    }
+    .icon-btn:hover { color: var(--green2); border-color: var(--green); }
+    .icon-btn.danger:hover { color: var(--danger); border-color: var(--danger); }
+    .icon-btn svg { width: 1.25rem; height: 1.25rem; }
+    .list-more { margin-top: .9rem; }
+
+    .settings { display: grid; gap: .75rem; }
+    .setting {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: .95rem;
+      background: var(--solid);
+    }
+    .setting-name { font-weight: 750; }
+    .setting-desc { margin-top: .2rem; color: var(--muted); font-size: .78rem; line-height: 1.45; }
+    .setting select { min-width: 8.2rem; min-height: 3rem; padding: .55rem 2rem .55rem .75rem; border: 1px solid var(--line); border-radius: .75rem; color: var(--ink); background: var(--soft); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin-top: 1.15rem; }
+    .stat { padding: 1rem; border: 1px solid var(--line); border-radius: .95rem; background: var(--solid); text-align: center; }
+    .stat-num { font-family: Georgia, serif; font-size: 1.45rem; }
+    .stat-label { margin-top: .2rem; color: var(--muted); font-size: .7rem; }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 40;
+      left: 50%;
+      bottom: max(.8rem, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      width: min(calc(100% - 1.5rem), 32rem);
+      padding: .35rem;
+      border: 1px solid var(--line);
+      border-radius: 1.25rem;
+      background: color-mix(in srgb, var(--solid) 92%, transparent);
+      box-shadow: 0 .9rem 2.4rem rgba(47, 37, 27, .18);
+      backdrop-filter: blur(1rem);
+    }
+    .nav {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      min-width: 0;
+      min-height: 3.6rem;
+      gap: .15rem;
+      border: 0;
+      border-radius: .9rem;
+      color: var(--muted);
+      background: transparent;
+      font-size: .7rem;
+      letter-spacing: .045em;
+    }
+    .nav svg { width: 1.35rem; height: 1.35rem; }
+    .nav.active { color: var(--green2); background: var(--green-soft); }
+
+    .toast {
+      position: fixed;
+      z-index: 90;
+      left: 50%;
+      bottom: calc(5.8rem + env(safe-area-inset-bottom));
+      transform: translate(-50%, 1rem);
+      max-width: min(90vw, 31rem);
+      padding: .75rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--solid);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      text-align: center;
+      font-size: .82rem;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    .loading {
+      position: fixed;
+      z-index: 200;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 1.25rem;
+      background: var(--bg);
+    }
+    .loading-card {
+      width: min(100%, 25rem);
+      padding: 2rem;
+      border: 1px solid var(--line);
+      border-radius: 1.35rem;
+      background: var(--solid);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .spinner {
+      width: 2.9rem;
+      height: 2.9rem;
+      margin: 0 auto 1rem;
+      border: .23rem solid var(--line);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin .85s linear infinite;
+    }
+    .loading-title { font-family: Georgia, serif; font-size: 1.65rem; }
+    .loading-text { margin-top: .55rem; color: var(--muted); line-height: 1.55; }
+    .loading-progress { margin-top: .8rem; color: var(--green2); font-size: .78rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .modal-backdrop {
+      position: fixed;
+      z-index: 300;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(20, 16, 12, .58);
+    }
+    .modal {
+      width: min(100%, 31rem);
+      max-height: min(80vh, 40rem);
+      overflow: auto;
+      padding: 1.35rem;
+      border: 1px solid var(--line);
+      border-radius: 1.2rem;
+      color: var(--ink);
+      background: var(--solid);
+      box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .28);
+    }
+    .modal h2 { margin: 0; font-family: Georgia, serif; font-size: 1.8rem; }
+    .modal-body { margin-top: .8rem; color: var(--muted); line-height: 1.6; white-space: pre-line; }
+    .modal-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .6rem; margin-top: 1.2rem; }
+    .modal-actions button { min-height: 3rem; padding: .65rem 1rem; border: 1px solid var(--line); border-radius: .75rem; color: var(--ink); background: var(--soft); }
+    .modal-actions .primary { color: white; border-color: var(--green); background: var(--green); }
+    .modal-actions .danger { color: white; border-color: var(--danger); background: var(--danger); }
+
+    @media (max-width: 43rem) {
+      .top { gap: .75rem; }
+      .language-panel { grid-template-columns: minmax(0, 1fr) 3.5rem minmax(0, 1fr); gap: .7rem; padding: 1.1rem; }
+      .swap { width: 3.5rem; height: 3.5rem; }
+      .select-box { height: 3.9rem; }
+      .search-panel { grid-template-columns: 1fr; }
+      .search-box { min-height: 4.65rem; }
+      .lookup { min-width: 0; min-height: 3.45rem; }
+      .content, .section { padding: 1rem; }
+      .empty { min-height: 20.8rem; }
+    }
+
+    @media (max-width: 35rem) {
+      .top { display: grid; grid-template-columns: minmax(0, 1fr); gap: .85rem; }
+      .ui-language-toggle { justify-self: start; width: min(100%, 22rem); max-width: 100%; }
+      .language-panel { grid-template-columns: 1fr; align-items: stretch; gap: .65rem; }
+      .swap { justify-self: center; transform: rotate(90deg); }
+      .swap:active { transform: rotate(98deg) scale(.95); }
+      .results-head, .section-head { align-items: flex-start; }
+      .setting { grid-template-columns: 1fr; }
+      .setting > :last-child { justify-self: start; }
+      .stats { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 25rem) {
+      .shell { padding-inline: .65rem; }
+      .brand { gap: .65rem; }
+      .book-logo { width: 4.1rem; height: 2.9rem; border-radius: .85rem; }
+      h1 { font-size: 2.1rem; }
+      .subtitle { font-size: .53rem; letter-spacing: .11em; }
+      .ui-language-toggle { min-height: 3.8rem; padding: .45rem .6rem .45rem .45rem; }
+      .ui-language-flag { width: 2.8rem; height: 2.8rem; }
+      .ui-language-text { font-size: .7rem; }
+      .search-box { padding-left: .65rem; }
+      .search-box > svg { width: 1.45rem; height: 1.45rem; }
+      .search-box input { padding-inline: .45rem; font-size: 1.3rem; }
+      .results-head { display: grid; }
+      .result-count { white-space: normal; }
+      .list-row { grid-template-columns: 1fr; }
+      .actions { justify-content: flex-end; }
+    }
+
+    @media (max-width: 18rem) {
+      .shell { padding-inline: .35rem; }
+      .book-logo { display: none; }
+      .search-box > svg { display: none; }
+      .search-box input { padding-left: .45rem; font-size: 1.05rem; }
+      .clear { width: 2.5rem; height: 2.5rem; margin-right: .15rem; }
+      .language-panel, .content, .section { padding: .7rem; }
+      .nav { font-size: .58rem; letter-spacing: 0; }
+      .nav svg { width: 1.2rem; height: 1.2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body class="app-loading">
+  <div class="loading" id="loading" role="status" aria-live="polite" aria-atomic="true">
+    <div class="loading-card">
+      <div class="spinner" id="loadingSpinner" aria-hidden="true"></div>
+      <div class="loading-title" id="loadingTitle" data-i18n="loadingTitle">Opening Lexicon</div>
+      <div class="loading-text" id="loadingText" data-i18n="loadingText">Preparing 267,792 offline source rows…</div>
+      <div class="loading-progress" id="loadingProgress" data-i18n="loadingStart">Starting…</div>
+    </div>
+  </div>
+
+  <div id="appRoot" inert aria-hidden="true">
+    <div class="shell">
+      <header class="top">
+        <div class="brand">
+          <div class="book-logo" aria-hidden="true"><img src="assets/logo-ab-book.png" alt=""></div>
+          <div><h1>Lexicon</h1><div class="subtitle" data-i18n="subtitle">Two-way offline Rusyn - English dictionary</div></div>
+        </div>
+        <button class="ui-language-toggle" id="uiLanguageToggle" type="button" aria-label="Switch interface language to Rusyn">
+          <img class="ui-language-flag" id="uiLanguageFlag" src="assets/flag-uk.png" alt="British flag">
+          <span class="ui-language-text" id="uiLanguageText">Language in use: English</span>
+        </button>
+      </header>
+
+      <main>
+        <section class="view active" data-view="search" id="searchView">
+          <div class="panel language-panel">
+            <div class="language-control">
+              <label class="label" for="fromLanguage" data-i18n="from">From</label>
+              <div class="select-box">
+                <span class="lang-code" id="fromMark">rsk</span><span class="lang-separator" aria-hidden="true">|</span>
+                <select id="fromLanguage" aria-label="From language" data-requires-ready disabled>
+                  <option value="rusyn" data-i18n="languageRusyn">Rusyn</option>
+                  <option value="english" data-i18n="languageEnglish">English</option>
+                </select>
+                <span class="chev" aria-hidden="true"></span>
+              </div>
+            </div>
+            <button class="swap" id="swap" type="button" aria-label="Swap languages" data-i18n-aria="swapLanguages" data-requires-ready disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 7h11l-3-3m3 3-3 3M17 17H6l3 3m-3-3 3-3"/></svg></button>
+            <div class="language-control">
+              <label class="label" for="toLanguage" data-i18n="to">To</label>
+              <div class="select-box">
+                <span class="lang-code" id="toMark">en</span><span class="lang-separator" aria-hidden="true">|</span>
+                <select id="toLanguage" aria-label="To language" data-requires-ready disabled>
+                  <option value="english" data-i18n="languageEnglish">English</option>
+                  <option value="rusyn" data-i18n="languageRusyn">Rusyn</option>
+                </select>
+                <span class="chev" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="direction"><div class="pill" id="direction">Rusyn → English</div></div>
+
+          <div class="search-wrap" id="searchWrap">
+            <div class="panel search-panel">
+              <div class="search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                <input id="searchInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" lang="rsk" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions" aria-label="Упишце слово" placeholder="Упишце слово" data-requires-ready disabled>
+                <button class="clear" id="clear" type="button" aria-label="Clear search" data-i18n-aria="clearSearch" data-requires-ready disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+              </div>
+              <button class="lookup" id="lookup" type="button" data-i18n="lookUp" data-requires-ready disabled>Look up</button>
+            </div>
+            <div class="suggestions hidden" id="suggestions" role="listbox" aria-label="Word suggestions" data-i18n-aria="wordSuggestions"></div>
+          </div>
+
+          <div class="panel content" id="content"></div>
+        </section>
+
+        <section class="view" data-view="favorites" id="favoritesView">
+          <div class="panel section">
+            <div class="section-head"><div><h2 class="section-title" id="favoritesTitle" data-i18n="favorites">Favorites</h2><div class="section-sub" data-i18n="favoritesSub">Saved on this device only.</div></div><button class="soft danger" id="clearFavorites" type="button" data-i18n="clearAll" data-requires-ready disabled>Clear all</button></div>
+            <div class="stack" id="favoritesList" aria-labelledby="favoritesTitle"></div>
+          </div>
+        </section>
+
+        <section class="view" data-view="history" id="historyView">
+          <div class="panel section">
+            <div class="section-head"><div><h2 class="section-title" id="historyTitle" data-i18n="history">History</h2><div class="section-sub" data-i18n="historySub">Your 50 most recent searches.</div></div><button class="soft danger" id="clearHistory" type="button" data-i18n="clearAll" data-requires-ready disabled>Clear all</button></div>
+            <div class="stack" id="historyList" aria-labelledby="historyTitle"></div>
+          </div>
+        </section>
+
+        <section class="view" data-view="settings" id="settingsView">
+          <div class="panel section">
+            <div class="section-head"><div><h2 class="section-title" data-i18n="settings">Settings</h2><div class="section-sub" data-i18n="settingsSub">Display and local data information.</div></div></div>
+            <div class="settings">
+              <div class="setting">
+                <div><label class="setting-name" for="appearance" data-i18n="appearance">Appearance</label><div class="setting-desc" id="appearanceDesc" data-i18n="appearanceDesc">Follow the system theme or choose a fixed light or dark appearance.</div></div>
+                <select id="appearance" aria-describedby="appearanceDesc"><option value="system" data-i18n="system">System</option><option value="light" data-i18n="light">Light</option><option value="dark" data-i18n="dark">Dark</option></select>
+              </div>
+              <div class="setting">
+                <div><label class="setting-name" for="fontSize" data-i18n="textSize">Text size</label><div class="setting-desc" id="fontSizeDesc" data-i18n="textSizeDesc">Adjust interface and result text.</div></div>
+                <select id="fontSize" aria-describedby="fontSizeDesc"><option value="15px" data-i18n="compact">Compact</option><option value="16px" data-i18n="standard">Standard</option><option value="18px" data-i18n="large">Large</option></select>
+              </div>
+              <div class="setting">
+                <div><div class="setting-name" data-i18n="dictionaryAudit">Dictionary audit</div><div class="setting-desc" id="auditDesc" data-i18n="auditDesc">Every non-header data row from the workbook is embedded exactly once.</div></div>
+                <button class="soft" id="audit" type="button" aria-describedby="auditDesc" data-i18n="showDetails" data-requires-ready disabled>Show details</button>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="stat-num" id="statTotal">—</div><div class="stat-label" data-i18n="sourceRows">Source rows</div></div>
+              <div class="stat"><div class="stat-num" id="statTranslated">—</div><div class="stat-label" data-i18n="translatedRows">Translated rows</div></div>
+              <div class="stat"><div class="stat-num" id="statMissing">—</div><div class="stat-label" data-i18n="withoutRusyn">Without Rusyn</div></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Main navigation" data-i18n-aria="mainNavigation">
+      <button class="nav active" data-target="search" type="button" aria-current="page" data-requires-ready disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span data-i18n="search">Search</span></button>
+      <button class="nav" data-target="favorites" type="button" data-requires-ready disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg><span data-i18n="favorites">Favorites</span></button>
+      <button class="nav" data-target="history" type="button" data-requires-ready disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5M12 7v5l3 2"/></svg><span data-i18n="history">History</span></button>
+      <button class="nav" data-target="settings" type="button" data-requires-ready disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14v-4a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6h4a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1v4a1.7 1.7 0 0 0-1.6 1Z"/></svg><span data-i18n="settings">Settings</span></button>
+    </nav>
+  </div>
+
+  <div class="toast" id="toast" aria-hidden="true"></div>
+  <div class="visually-hidden" id="status" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalBody">
+      <h2 id="modalTitle" data-i18n="confirm">Confirm</h2>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions"><button id="modalCancel" type="button" data-i18n="cancel">Cancel</button><button class="primary" id="modalConfirm" type="button" data-i18n="ok">OK</button></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
