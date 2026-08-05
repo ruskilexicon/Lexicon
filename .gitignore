@@ -1,0 +1,53 @@
+# Gradle files
+.gradle/
+**/build/
+/build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS Files
+*.log
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+captures/
+
+# Keystore files (should not be committed)
+*.jks
+*.keystore
+*.key
+
+# Signing secrets
+keystore.properties
+
+# Native
+.externalNativeBuild
+.cxx
+
+# macOS
+.DS_Store
+
+# Caches
+.cache/
+
+# Crashlytics / Firebase / Play
+google-services.json
+firebase_app_indexer.json
+crashlytics-build.properties
+play-app-unsigned.apk
+play-app-unsigned-aligned.apk
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# OS files
+Thumbs.db
+Desktop.ini
