@@ -60,7 +60,7 @@
       findWord: 'Find a word',
       homeDescription: 'Search all embedded source rows in either direction. Exact matches return every matching workbook row. Rusyn search also corrects visually identical Latin letters accidentally mixed into Cyrillic words.',
       fullyOffline: 'fully offline',
-      enterRusyn: 'Упишце слово',
+      enterRusyn: 'Enter a Rusyn word',
       enterEnglish: 'Enter an English word',
       enterEnglishMessage: 'Enter an English word.',
       ready: 'Lexicon is ready.',
@@ -133,7 +133,7 @@
     rusyn: Object.freeze({
       appTitle: 'Lexicon — Двосмерни офлайн руски - анґлийски словнїк',
       subtitle: 'Двосмерни офлайн руски - анґлийски словнїк',
-      interfaceBadge: 'Язик у хаснованю: Руски',
+      interfaceBadge: 'Language in use: "Руски"',
       interfaceFlagAlt: 'Руска застава',
       switchInterface: 'Пременїц язик апликациї на анґлийски',
       swapLanguages: 'Вимениц язики прекладу',
@@ -142,12 +142,12 @@
       loadingText: 'Приправянє 267,792 офлайн жридлових рядкох…',
       loadingStart: 'Початок…',
       from: 'Зоз',
-      to: 'На',
-      languageRusyn: 'Руски',
+      to: 'Нa',
+      languageRusyn: 'Руского',
       languageEnglish: 'Анґлийски',
       sourceLanguageRusyn: 'Руского',
-      sourceLanguageEnglish: 'Анґлийского',
-      targetLanguageRusyn: 'Руски',
+      sourceLanguageEnglish: 'Анґлийски',
+      targetLanguageRusyn: 'Руского',
       targetLanguageEnglish: 'Анґлийски',
       lookUp: 'Патрац',
       wordSuggestions: 'Предкладаня словох',
@@ -310,7 +310,7 @@
     from: 'rusyn',
     to: 'english',
     view: 'search',
-    uiLanguage: 'english',
+    uiLanguage: 'rusyn',
     scroll: { search: 0, favorites: 0, history: 0, settings: 0 },
     suggestions: [],
     activeSuggestion: -1,
@@ -1712,11 +1712,11 @@
   }
 
   function sanitizeSettings(value) {
-    if (!value || typeof value !== 'object' || Array.isArray(value)) return { appearance: 'system', font: '16px', language: 'english' };
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return { appearance: 'system', font: '16px', language: 'rusyn' };
     let appearance = ['system', 'light', 'dark'].includes(value.appearance) ? value.appearance : null;
     if (!appearance && typeof value.dark === 'boolean') appearance = value.dark ? 'dark' : 'light';
     const font = ['15px', '16px', '18px'].includes(value.font) ? value.font : '16px';
-    const language = UI_LANGS.has(value.language) ? value.language : 'english';
+    const language = UI_LANGS.has(value.language) ? value.language : 'rusyn';
     return { appearance: appearance || 'system', font, language };
   }
 
