@@ -173,6 +173,21 @@
       text-overflow: ellipsis;
       flex: 1 1 auto;
     }
+    .ui-language-toggle-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      flex: 0 0 auto;
+    }
+    .ui-language-hint {
+      max-width: 14rem;
+      color: var(--muted);
+      font-size: .6rem;
+      line-height: 1.35;
+      letter-spacing: .02em;
+      text-align: center;
+    }
 
     .panel {
       border: 1px solid var(--line);
@@ -642,7 +657,8 @@
 
     @media (max-width: 35rem) {
       .top { display: grid; grid-template-columns: minmax(0, 1fr); gap: .85rem; }
-      .ui-language-toggle { justify-self: start; width: min(100%, 22rem); max-width: 100%; }
+      .ui-language-toggle-wrap { justify-self: start; width: min(100%, 22rem); max-width: 100%; }
+      .ui-language-toggle-wrap .ui-language-toggle { width: 100%; }
       .language-panel { grid-template-columns: 1fr; align-items: stretch; gap: .65rem; }
       .swap { justify-self: center; transform: rotate(90deg); }
       .swap:active { transform: rotate(98deg) scale(.95); }
@@ -703,10 +719,13 @@
           <div class="book-logo" aria-hidden="true"><img src="assets/logo-ab-book.png" alt=""></div>
           <div><h1>Lexicon</h1><div class="subtitle" data-i18n="subtitle">Two-way offline Rusyn - English dictionary</div></div>
         </div>
-        <button class="ui-language-toggle" id="uiLanguageToggle" type="button" aria-label="Пременїц язик апликациї на анґлийски">
-          <img class="ui-language-flag" id="uiLanguageFlag" src="assets/flag-rusyn.png" alt="Rusyn flag">
-          <span class="ui-language-text" id="uiLanguageText">Language in use: "Руски"</span>
-        </button>
+        <div class="ui-language-toggle-wrap">
+          <button class="ui-language-toggle" id="uiLanguageToggle" type="button" aria-label="Пременїц язик апликациї на анґлийски">
+            <img class="ui-language-flag" id="uiLanguageFlag" src="assets/flag-rusyn.png" alt="Руска застава">
+            <span class="ui-language-text" id="uiLanguageText">Language in use: "Руски"</span>
+          </button>
+          <div class="ui-language-hint" id="uiLanguageHint" data-i18n="interfaceHint">Кликнїце на заставу  за пременку язика</div>
+        </div>
       </header>
 
       <main>
