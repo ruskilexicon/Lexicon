@@ -7,254 +7,45 @@
   const UI_LANGS = new Set(['english', 'rusyn']);
   const VIEWS = new Set(['search', 'favorites', 'history', 'settings']);
 
-  const I18N = Object.freeze({
-    english: Object.freeze({
-      appTitle: 'Lexicon — Two-way offline Rusyn - English dictionary',
-      subtitle: 'Two-way offline Rusyn - English dictionary',
-      interfaceBadge: 'Language in use: English',
-      interfaceFlagAlt: 'British flag',
-      interfaceHint: 'Click on flag to change the language',
-      switchInterface: 'Switch interface language to Rusyn',
-      swapLanguages: 'Swap translation languages',
-      clearSearch: 'Clear search',
-      loadingTitle: 'Opening Lexicon',
-      loadingText: 'Preparing 267,792 offline source rows…',
-      loadingStart: 'Starting…',
-      from: 'From',
-      to: 'To',
-      languageRusyn: 'Rusyn',
-      languageEnglish: 'English',
-      sourceLanguageRusyn: 'Rusyn',
-      sourceLanguageEnglish: 'English',
-      targetLanguageRusyn: 'Rusyn',
-      targetLanguageEnglish: 'English',
-      lookUp: 'Look up',
-      wordSuggestions: 'Word suggestions',
-      favorites: 'Favorites',
-      favoritesSub: 'Saved on this device only.',
-      clearAll: 'Clear all',
-      history: 'History',
-      historySub: 'Your 50 most recent searches.',
-      settings: 'Settings',
-      settingsSub: 'Display and local data information.',
-      appearance: 'Appearance',
-      appearanceDesc: 'Follow the system theme or choose a fixed light or dark appearance.',
-      system: 'System',
-      light: 'Light',
-      dark: 'Dark',
-      textSize: 'Text size',
-      textSizeDesc: 'Adjust interface and result text.',
-      compact: 'Compact',
-      standard: 'Standard',
-      large: 'Large',
-      dictionaryAudit: 'Dictionary audit',
-      auditDesc: 'Every non-header data row from the workbook is embedded exactly once.',
-      showDetails: 'Show details',
-      sourceRows: 'Source rows',
-      translatedRows: 'Translated rows',
-      withoutRusyn: 'Without Rusyn',
-      search: 'Search',
-      mainNavigation: 'Main navigation',
-      confirm: 'Confirm',
-      cancel: 'Cancel',
-      ok: 'OK',
-      findWord: 'Find a word',
-      homeDescription: 'Search all embedded source rows in either direction. Exact matches return every matching workbook row. Rusyn search also corrects visually identical Latin letters accidentally mixed into Cyrillic words.',
-      fullyOffline: 'fully offline',
-      enterRusyn: 'Enter a Rusyn word',
-      enterEnglish: 'Enter an English word',
-      enterEnglishMessage: 'Enter an English word.',
-      ready: 'Lexicon is ready.',
-      loadFailure: 'Dictionary data could not be loaded or failed its integrity checks. Keep index.html, app.js, data-worker.js and dictionary.json in the same folder.',
-      selectedDirection: '{from} to {to} selected.',
-      resultFound: '{count} result found for {query}.',
-      resultsFound: '{count} results found for {query}.',
-      row: 'row',
-      rows: 'rows',
-      showMore: 'Show more',
-      sheet: 'Sheet',
-      missingTranslation: 'Translation unavailable in source data',
-      blankSource: 'Blank source word',
-      sourceRow: 'source row',
-      addFavorite: 'Add to favorites',
-      removeFavorite: 'Remove from favorites',
-      noExactMatch: 'No exact match',
-      notFound: '“{query}” was not found in {language}. Search ignores capitalization and repeated spaces. For Rusyn, it also treats common Latin/Cyrillic look-alike letters as the same character.',
-      rowsDisplayed: '{shown} of {total} rows displayed.',
-      savedFavorite: 'Saved to favorites.',
-      removedFavorite: 'Removed from favorites.',
-      noFavorites: 'No saved entries yet. Use the star beside a result.',
-      translationUnavailable: 'Translation unavailable',
-      englishUnavailable: 'English word unavailable',
-      source: 'Source',
-      openSaved: 'Open this saved entry',
-      showMoreFavorites: 'Show more favorites',
-      favoritesDisplayed: '{shown} of {total} favorites displayed.',
-      savedRowUnavailable: 'This saved source row is no longer available.',
-      savedEntryOpened: 'Saved entry opened.',
-      clearFavoritesTitle: 'Clear favorites?',
-      clearFavoritesBody: 'Remove all {count} saved entries from this device?',
-      clearFavoritesConfirm: 'Clear favorites',
-      favoritesCleared: 'Favorites cleared.',
-      noSearches: 'No searches yet.',
-      repeatSearch: 'Repeat search',
-      removeHistory: 'Remove from history',
-      historyRemoved: 'History item removed.',
-      clearHistoryTitle: 'Clear search history?',
-      clearHistoryBody: 'Remove all {count} recent searches from this device?',
-      clearHistoryConfirm: 'Clear history',
-      historyCleared: 'History cleared.',
-      unknownDate: 'Unknown date',
-      auditTitle: 'Lexicon data audit',
-      close: 'Close',
-      auditEmbedded: 'Embedded source rows: {count}',
-      auditBoth: 'Rows with both words: {count}',
-      auditNoRusyn: 'Rows without a Rusyn word: {count}',
-      auditNoEnglish: 'Rows without an English word: {count}',
-      auditSheets: 'Source worksheets: {count}',
-      auditMixed: 'Rusyn rows with mixed-script look-alikes normalized for search: {count}',
-      auditNote: 'Every non-header workbook row containing dictionary data was embedded exactly once. No dictionary row was removed or rewritten. See data-audit.json for per-sheet counts.',
-      storageWarning: 'Local storage is unavailable. Favorites and history will last only until the app closes.',
-      unableOpen: 'Unable to open Lexicon',
-      reloadApp: 'Reload app',
-      progressStartingWorker: 'Starting background decoder…',
-      progressFallback: 'Background decoder unavailable. Using compatible fallback…',
-      progressPreparing: 'Preparing dictionary…',
-      progressLoading: 'Loading packed dictionary…',
-      progressColumns: 'Decoding dictionary columns…',
-      progressWorksheets: 'Decoding worksheet references…',
-      progressRows: 'Decoding source rows…',
-      progressRusynOffsets: 'Decoding Rusyn offsets…',
-      progressEnglishOffsets: 'Decoding English offsets…',
-      progressRusynWords: 'Decoding Rusyn words…',
-      progressEnglishWords: 'Decoding English words…',
-      progressOrder: 'Decoding search order…',
-      progressVerify: 'Verifying all source rows…'
-    }),
-    rusyn: Object.freeze({
-      appTitle: 'Lexicon — Двосмерни офлайн руски - анґлийски словнїк',
-      subtitle: 'Двосмерни офлайн руски - анґлийски словнїк',
-      interfaceBadge: 'Language in use: "Руски"',
-      interfaceFlagAlt: 'Руска застава',
-      interfaceHint: 'Кликнїце на заставу  за пременку язика',
-      switchInterface: 'Пременїц язик апликациї на анґлийски',
-      swapLanguages: 'Вимениц язики прекладу',
-      clearSearch: 'Вичисциц патранє',
-      loadingTitle: 'Отвиранє Lexicon-а',
-      loadingText: 'Приправянє 267,792 офлайн жридлових рядкох…',
-      loadingStart: 'Початок…',
-      from: 'Зоз',
-      to: 'Нa',
-      languageRusyn: 'Руского',
-      languageEnglish: 'Анґлийски',
-      sourceLanguageRusyn: 'Руского',
-      sourceLanguageEnglish: 'Анґлийски',
-      targetLanguageRusyn: 'Руского',
-      targetLanguageEnglish: 'Анґлийски',
-      lookUp: 'Патрац',
-      wordSuggestions: 'Предкладаня словох',
-      favorites: 'Улюбени',
-      favoritesSub: 'Учуване лєм на тим уредзеню.',
-      clearAll: 'Вичисциц шицко',
-      history: 'История',
-      historySub: 'Ваших 50 найновших патраньох.',
-      settings: 'Подлашованя',
-      settingsSub: 'Вигляд и локални податки.',
-      appearance: 'Вигляд',
-      appearanceDesc: 'Слїдзце системску тему або виберце сталу светлу чи цемну тему.',
-      system: 'Системска',
-      light: 'Светла',
-      dark: 'Цемна',
-      textSize: 'Велькосц тексту',
-      textSizeDesc: 'Подлашуйце текст интерфейсу и резултатох.',
-      compact: 'Мала',
-      standard: 'Стандардна',
-      large: 'Велька',
-      dictionaryAudit: 'Контрола словнїка',
-      auditDesc: 'Кажди рядок зоз податками без заглавя уключени точно раз.',
-      showDetails: 'Приказац подробносци',
-      sourceRows: 'Жридлови рядки',
-      translatedRows: 'Преложени рядки',
-      withoutRusyn: 'Без руского',
-      search: 'Патранє',
-      mainNavigation: 'Главна навигация',
-      confirm: 'Потвердзенє',
-      cancel: 'Одрушац',
-      ok: 'Добре',
-      findWord: 'Найдзце слово',
-      homeDescription: 'Препатруйце шицки уключени жридлови рядки у обидвох напрямох. Точне совподанє враци шицки одвитуюци рядки зоз роботней кнїжки. При патраню по руски апликация виправя и латински букви хтори виглядаю исто як кирилски.',
-      fullyOffline: 'цалком офлайн',
-      enterRusyn: 'Упишце слово',
-      enterEnglish: 'Упишце анґлийске слово',
-      enterEnglishMessage: 'Упишце анґлийске слово.',
-      ready: 'Lexicon готови.',
-      loadFailure: 'Податки словнїка ше нє могли отворици або нє прешли контролу. Тримайце index.html, app.js, data-worker.js и dictionary.json у истей папки.',
-      selectedDirection: 'Вибрани напрям {from} → {to}.',
-      resultFound: 'Найдзени 1 резултат за {query}.',
-      resultsFound: 'Найдзени {count} резултати за {query}.',
-      row: 'рядок',
-      rows: 'рядки',
-      showMore: 'Приказац вецей',
-      sheet: 'Аркуш',
-      missingTranslation: 'Преклад нє доступни у жридлових податкох',
-      blankSource: 'Празне жридлове слово',
-      sourceRow: 'жридлови рядок',
-      addFavorite: 'Додац до улюбених',
-      removeFavorite: 'Одстранїц зоз улюбених',
-      noExactMatch: 'Нєт точного совподаня',
-      notFound: '„{query}“ нє найдене у {language}. Патранє нє розликує вельки и мали букви и повторени розходи. При рускім патраню подобни латински и кирилски букви рахую ше як исти.',
-      rowsDisplayed: 'Приказани {shown} зоз {total} рядкох.',
-      savedFavorite: 'Учуване до улюбених.',
-      removedFavorite: 'Одстранєне зоз улюбених.',
-      noFavorites: 'Ище нєт учуваних словох. Хаснуйце звездочку при резултату.',
-      translationUnavailable: 'Преклад нє доступни',
-      englishUnavailable: 'Анґлийске слово нє доступне',
-      source: 'Жридло',
-      openSaved: 'Отвориц учуване слово',
-      showMoreFavorites: 'Приказац вецей улюбених',
-      favoritesDisplayed: 'Приказани {shown} зоз {total} улюбених.',
-      savedRowUnavailable: 'Тот учувани жридлови рядок вецей нє доступни.',
-      savedEntryOpened: 'Учуване слово отворене.',
-      clearFavoritesTitle: 'Вичисциц улюбени?',
-      clearFavoritesBody: 'Одстранїц шицки {count} учувани слова зоз того уредзеня?',
-      clearFavoritesConfirm: 'Вичисциц улюбени',
-      favoritesCleared: 'Улюбени вичисцени.',
-      noSearches: 'Ище нєт патраньох.',
-      repeatSearch: 'Повториц патранє',
-      removeHistory: 'Одстранїц зоз историї',
-      historyRemoved: 'Ставка зоз историї одстранєна.',
-      clearHistoryTitle: 'Вичисциц историю патраня?',
-      clearHistoryBody: 'Одстранїц шицки {count} найновши патраня зоз того уредзеня?',
-      clearHistoryConfirm: 'Вичисциц историю',
-      historyCleared: 'История вичисцена.',
-      unknownDate: 'Нєпознати датум',
-      auditTitle: 'Контрола податкох Lexicon-а',
-      close: 'Завериц',
-      auditEmbedded: 'Уключени жридлови рядки: {count}',
-      auditBoth: 'Рядки зоз обома словами: {count}',
-      auditNoRusyn: 'Рядки без руского слова: {count}',
-      auditNoEnglish: 'Рядки без анґлийского слова: {count}',
-      auditSheets: 'Жридлови аркуши: {count}',
-      auditMixed: 'Руски рядки зоз подлашованима подобнима буквами: {count}',
-      auditNote: 'Кажди рядок роботней кнїжки зоз словнїковима податками уключени точно раз. Нєоден рядок нє одстранєни анї преписани. Подробносци по аркушох у data-audit.json.',
-      storageWarning: 'Локалне складованє нє доступне. Улюбени и история буду доступни лєм покля апликация отворена.',
-      unableOpen: 'Lexicon ше нє може отвориц',
-      reloadApp: 'Поново отвориц апликацию',
-      progressStartingWorker: 'Започинанє декодованя у позадзини…',
-      progressFallback: 'Декодованє у позадзини нє доступне. Хаснує ше компатибилни способ…',
-      progressPreparing: 'Приправянє словнїка…',
-      progressLoading: 'Начитованє спакованого словнїка…',
-      progressColumns: 'Декодованє колонкох словнїка…',
-      progressWorksheets: 'Декодованє одношеньох на аркуши…',
-      progressRows: 'Декодованє жридлових рядкох…',
-      progressRusynOffsets: 'Декодованє руских офсетох…',
-      progressEnglishOffsets: 'Декодованє анґлийских офсетох…',
-      progressRusynWords: 'Декодованє руских словох…',
-      progressEnglishWords: 'Декодованє анґлийских словох…',
-      progressOrder: 'Декодованє порядку патраня…',
-      progressVerify: 'Контрола шицких жридлових рядкох…'
-    })
-  });
+  let I18N = Object.freeze({ english: Object.freeze({}), rusyn: Object.freeze({}) });
+
+  async function loadI18N() {
+    const [englishText, rusynText] = await Promise.all([
+      fetchText('english-i18n.txt'),
+      fetchText('rusyn-i18n.txt')
+    ]);
+    I18N = Object.freeze({
+      english: Object.freeze(parseI18nTable(englishText)),
+      rusyn: Object.freeze(parseI18nTable(rusynText))
+    });
+  }
+
+  async function fetchText(path) {
+    const response = await fetch(path, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Could not load ' + path + ' (' + response.status + ').');
+    return response.text();
+  }
+
+  function parseI18nTable(text) {
+    const table = {};
+    for (const rawLine of text.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith('#')) continue;
+      const separator = line.indexOf(':');
+      if (separator < 1) continue;
+      const key = line.slice(0, separator).trim();
+      let value = line.slice(separator + 1).trim();
+      if (value.startsWith('"') && value.endsWith('"')) {
+        try {
+          value = JSON.parse(value);
+        } catch {
+          value = value.slice(1, -1);
+        }
+      }
+      if (key) table[key] = value;
+    }
+    return table;
+  }
   const FAVORITES_PAGE = 50;
   const RESULTS_FIRST_PAGE = 40;
   const RESULTS_NEXT_PAGE = 60;
@@ -399,6 +190,17 @@
 
   async function init() {
     cache();
+    try {
+      await loadI18N();
+    } catch (error) {
+      console.error(error);
+      E.loadingSpinner.classList.add('hidden');
+      E.loading.setAttribute('role', 'alert');
+      E.loadingTitle.textContent = 'Unable to open Lexicon';
+      E.loadingText.textContent = 'The interface language files (english-i18n.txt and rusyn-i18n.txt) could not be loaded.';
+      E.loadingProgress.textContent = '';
+      return;
+    }
     applySettings();
     persistSanitizedStorage();
     bind();
