@@ -630,6 +630,14 @@
     return lang === 'english' ? t('languageEnglish') : t('languageRusyn');
   }
 
+  function directionName(lang) {
+    if (S.uiLanguage !== 'rusyn') return name(lang);
+
+    return lang === 'english'
+      ? t('directionLanguageEnglish')
+      : t('directionLanguageRusyn');
+  }
+
   function roleName(lang, role) {
     const source = role === 'source';
     if (lang === 'english') return t(source ? 'sourceLanguageEnglish' : 'targetLanguageEnglish');
@@ -675,16 +683,10 @@
   function applyDirectionUI() {
     if (!E.fromLanguage || !E.toLanguage) return;
     const ui = DIRECTION_UI[S.from] || DIRECTION_UI.rusyn;
-    const rusynInterface = S.uiLanguage === 'rusyn';
-
-    // In the Rusyn interface, show the destination first: На en | Анґлийски
-    // for Rusyn-to-English, and На rsk | Руски for English-to-Rusyn.
-    // The source control follows after the swap button and uses the proper
-    // source-language forms: Руского / Анґлийского.
     if (E.fromControl && E.toControl) {
-      E.toControl.style.order = rusynInterface ? '1' : '3';
+      E.fromControl.style.order = '1';
       E.swap.style.order = '2';
-      E.fromControl.style.order = rusynInterface ? '3' : '1';
+      E.toControl.style.order = '3';
     }
 
     // Apply every code, role-specific name and value from one direction state
@@ -699,7 +701,8 @@
     E.toLanguage.setAttribute('lang', ui.to === 'rusyn' ? 'rsk' : 'en');
     E.fromLanguage.setAttribute('aria-label', `${t('from')}: ${roleName(ui.from, 'source')}`);
     E.toLanguage.setAttribute('aria-label', `${t('to')}: ${roleName(ui.to, 'target')}`);
-    E.direction.textContent = `${name(ui.from)} → ${name(ui.to)}`;
+    E.direction.textContent =
+      `${directionName(ui.from)} → ${name(ui.to)}`;
     const placeholder = ui.from === 'rusyn' ? t('enterRusyn') : t('enterEnglish');
     E.searchInput.placeholder = placeholder;
     E.searchInput.setAttribute('aria-label', placeholder);
